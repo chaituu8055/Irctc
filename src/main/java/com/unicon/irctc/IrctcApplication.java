@@ -20,5 +20,4 @@ public class IrctcApplication {
 //		System.out.println("booking Status:"+controller.bookingStart());
 	}
 	
-
 }
