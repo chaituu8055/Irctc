@@ -99,7 +99,7 @@ To run this application locally, follow these steps:
 1. Clone the repository:
 
 ```bash
-git clone https://github.com/shoaib749/IRCTC-Backened.git
+git clone https://github.com/chaituu8055/IRCTC-Backened.git
 ```
 
 2. Navigate to
