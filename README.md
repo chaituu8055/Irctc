@@ -14,18 +14,22 @@ This application is developed in Spring Boot and provides APIs for train booking
 
 ## ➤ API Endpoints
 
-1. **Endpoint:** `/`
-   - **Method:** GET
-   - **Description:** Retrieves the booking started date.
-   - **Response:** JSON containing the booking started date (`startDate`).
-
-2. **Endpoint:** `/adminLogin`
+1. **Endpoint:** `/userRegister`
    - **Method:** POST
-   - **Description:** Authenticates the admin user.
+   - **Description:** Registers a new user.
    - **Request Body:**
-     - `username` (string): Admin username.
-     - `password` (string): Admin password.
-
+     - `userFullName` (string): Full name of the user.
+     - `userName` (string): User's username.
+     - `password` (string): User's password.
+    
+2.  **Endpoint:** `/userLogin`
+   - **Method:** POST
+   - **Description:** Authenticates the user returns an authorization token for future requests..
+   - **Request Body:**
+     - `username` (string): User's username.
+     - `password` (string): User's password.
+   - **Response:** JSON containing the authorization token.
+    
 3. **Endpoint:** `/addTrain`
    - **Method:** POST
    - **Description:** Adds a new train.
@@ -36,35 +40,10 @@ This application is developed in Spring Boot and provides APIs for train booking
      - `stopStation` (Station): Destination station.
      - `numberOfSeats` (int): Total number of seats.
      - `fare` (int): Fare for the train.
-
-4. **Endpoint:** `/addStation`
-   - **Method:** POST
-   - **Description:** Adds a new station.
-   - **Request Body:**
-     - `stationCode` (int): Station code.
-     - `stationName` (string): Station name.
-
-5. **Endpoint:** `/showTrain`
-   - **Method:** GET
-   - **Description:** Retrieves all trains.
-   - **Response:** JSON array containing all train details (`trainList`).
-
-6. **Endpoint:** `/userRegister`
-   - **Method:** POST
-   - **Description:** Registers a new user.
-   - **Request Body:**
-     - `userFullName` (string): Full name of the user.
-     - `userName` (string): User's username.
-     - `password` (string): User's password.
-
-7. **Endpoint:** `/userLogin`
-   - **Method:** POST
-   - **Description:** Authenticates the user.
-   - **Request Body:**
-     - `username` (string): User's username.
-     - `password` (string): User's password.
-
-8. **Endpoint:** `/book/showTrain`
+   - **Headers:** 
+     - `API-Key` (string): Required API key for authentication.
+    
+4. **Endpoint:** `/book/showTrain`
    - **Method:** POST
    - **Description:** Retrieves available trains based on start and stop stations and date.
    - **Request Body:**
@@ -72,22 +51,52 @@ This application is developed in Spring Boot and provides APIs for train booking
      - `stopStation` (string): Stop station name.
      - `date` (Date): Date of travel.
    - **Response:** JSON array containing available train details (`trainList`).
-
-9. **Endpoint:** `/book/ticketBooking`
+    
+5. **Endpoint:** `/book/ticketBooking`
    - **Method:** POST
-   - **Description:** Books a ticket for a user.
+   - **Description:** Books a ticket for a user. **Requires authorization token.**
    - **Request Body:**
      - `userId` (int): User ID.
      - `logId` (long): Login ID.
      - `noOfPassengers` (int): Number of passengers.
+   - **Headers:**
+     - `Authorization` (string): Bearer token received from the login endpoint.
    - **Response:** JSON containing the booking details (`bookingDetails`).
+  
+6. **Endpoint:** `/user/showMyTickets`
+   - **Method:** POST
+   - **Description:** Retrieves tickets booked by a user. **Requires authorization token.**
+   - **Request Body:**
+     - `userId` (int): User ID.
+   - **Headers:**
+     - `Authorization` (string): Bearer token received from the login endpoint.
+   - **Response:** JSON array containing the booked ticket details (`ticketList`).
+  
+   **etc...
+     
+7. **Endpoint:** `/`
+   - **Method:** GET
+   - **Description:** Retrieves the booking started date.
+   - **Response:** JSON containing the booking started date (`startDate`).
 
-10. **Endpoint:** `/user/showMyTickets`
-    - **Method:** POST
-    - **Description:** Retrieves tickets booked by a user.
-    - **Request Body:**
-      - `userId` (int): User ID.
-    - **Response:** JSON array containing the booked ticket details (`ticketList`).
+8. **Endpoint:** `/adminLogin`
+   - **Method:** POST
+   - **Description:** Authenticates the admin user using API key only known to developer and admin i.e username : admin password : admin@123.
+   - **Request Body:**
+     - `username` (string): Admin username.
+     - `password` (string): Admin password.
+
+9. **Endpoint:** `/addStation`
+   - **Method:** POST
+   - **Description:** Adds a new station(Only admin can add and resuires authentication).
+   - **Request Body:**
+     - `stationCode` (int): Station code.
+     - `stationName` (string): Station name.
+
+10. **Endpoint:** `/showTrain`
+   - **Method:** GET
+   - **Description:** Retrieves all trains.
+   - **Response:** JSON array containing all train details (`trainList`).
 
 
 [![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/colored.png)](#getting-started)
